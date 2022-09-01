@@ -1,0 +1,29 @@
+org: gesuvs
+app: oauth
+service: oauth
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  httpApi:
+    cors: true
+  environment:
+    CLIENT_ID: ${param:CLIENT_ID}
+    CLIENT_SECRET: ${param:CLIENT_SECRET}
+
+functions:
+  send-code-auth:
+    handler: handler.sendCodeAuth
+    events:
+      - httpApi:
+          path: /send-code
+          method: post
+  validate-code:
+    handler: handler.validadeCode
+    events:
+      - httpApi:
+          path: /validade-code
+          method: post
+plugins:
+  - serverless-plugin-typescript
